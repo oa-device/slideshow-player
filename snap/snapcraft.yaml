@@ -1,0 +1,41 @@
+name: slideshow-player
+base: core22
+version: "0.1"
+summary: Slideshow Player for OrangePi
+description: |
+  A comprehensive slideshow player for OrangePi 5B.
+
+grade: stable
+confinement: strict
+
+parts:
+  slideshow-player:
+    source: .
+    plugin: dump
+    stage-packages:
+      - python3-dbus
+
+apps:
+  player-config:
+    command: player-config.sh
+    plugs:
+      - network
+      - network-bind
+      - home
+      - dbus
+      - removable-media
+      - hardware-observe
+      - camera
+
+hooks:
+  install:
+    plugs:
+      - network
+      - network-bind
+      - home
+      - dbus
+      - removable-media
+      - hardware-observe
+      - camera
+  post-refresh:
+    plugs: [network, network-bind]
